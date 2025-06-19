@@ -4,7 +4,7 @@ library(PeakSegJoint)
 library(data.table)
 
 # Load data
-data_path <- "\\PSJ.RData"
+data_path <- "PSJ.RData"
 if (!file.exists(data_path)) {
   stop("PSJ.RData not found at ", data_path)
 }
