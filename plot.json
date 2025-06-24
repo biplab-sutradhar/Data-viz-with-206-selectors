@@ -1,0 +1,1526 @@
+{
+ "geoms": {
+ "geom1_tallrect_coverage": {
+ "geom": "tallrect",
+"classed": "geom1_tallrect_coverage",
+"aes": {
+ "xmin": "chromStart/1000",
+"xmax": "chromEnd/1000",
+"fill": "annotation",
+"showSelected1": "annotation" 
+},
+"params": {
+ "na.rm": false,
+"na.rm": false,
+"alpha":      0.5,
+"colour": "#BEBEBE",
+"showSelected": "annotation",
+"help_showSelected": "annotation" 
+},
+"types": {
+ "fill": "rgb",
+"xmin": "numeric",
+"xmax": "numeric",
+"showSelected1": "character",
+"PANEL": "factor",
+"group": "character" 
+},
+"chunk_order": [],
+"nest_order": [
+ "showSelected1",
+"PANEL" 
+],
+"subset_order": [
+ "showSelected1",
+"PANEL" 
+],
+"chunks": 1,
+"total": 1 
+},
+"geom2_line_coverage": {
+ "geom": "line",
+"classed": "geom2_line_coverage",
+"aes": {
+ "x": "base/1000",
+"y": "count" 
+},
+"params": {
+ "na.rm": false,
+"na.rm": false,
+"colour": "#7F7F7F" 
+},
+"types": {
+ "y": "numeric",
+"x": "numeric",
+"PANEL": "factor",
+"group": "character" 
+},
+"chunk_order": [],
+"nest_order": [
+ "PANEL" 
+],
+"subset_order": [
+ "PANEL" 
+],
+"chunks": 1,
+"total": 1 
+},
+"geom3_segment_coverage": {
+ "geom": "segment",
+"classed": "geom3_segment_coverage",
+"aes": {
+ "x": "chromStart/1000",
+"y": "1",
+"xend": "chromEnd/1000",
+"yend": "1",
+"clickSelects": "problem.name",
+"showSelected1": "bases.per.problem" 
+},
+"params": {
+ "lineend": "butt",
+"na.rm": false,
+"na.rm": false,
+"size":        1,
+"colour": "#000000",
+"showSelected": "bases.per.problem",
+"clickSelects": "problem.name",
+"help_showSelected": "bases.per.problem",
+"help_clickSelects": "problem.name" 
+},
+"types": {
+ "y": "numeric",
+"yend": "numeric",
+"x": "numeric",
+"xend": "numeric",
+"clickSelects": "factor",
+"showSelected1": "integer",
+"PANEL": "factor",
+"group": "character" 
+},
+"chunk_order": [],
+"nest_order": [
+ "showSelected1",
+"PANEL" 
+],
+"subset_order": [
+ "showSelected1",
+"PANEL" 
+],
+"chunks": 1,
+"total": 1 
+},
+"geom4_segment_coverage": {
+ "geom": "segment",
+"classed": "geom4_segment_coverage",
+"aes": {
+ "x": "problemStart/1000",
+"y": "1",
+"xend": "problemEnd/1000",
+"yend": "1",
+"clickSelects": "problem.name",
+"showSelected1": "bases.per.problem" 
+},
+"params": {
+ "lineend": "butt",
+"na.rm": false,
+"na.rm": false,
+"size":        5,
+"colour": "#000000",
+"showSelected": "bases.per.problem",
+"clickSelects": "problem.name",
+"help_showSelected": "bases.per.problem",
+"help_clickSelects": "problem.name" 
+},
+"types": {
+ "y": "numeric",
+"yend": "numeric",
+"x": "numeric",
+"xend": "numeric",
+"clickSelects": "factor",
+"showSelected1": "integer",
+"PANEL": "factor",
+"group": "character" 
+},
+"chunk_order": [],
+"nest_order": [
+ "showSelected1",
+"PANEL" 
+],
+"subset_order": [
+ "showSelected1",
+"PANEL" 
+],
+"chunks": 1,
+"total": 1 
+},
+"geom5_text_coverage": {
+ "geom": "text",
+"classed": "geom5_text_coverage",
+"aes": {
+ "x": "chromStart/1000",
+"y": "problem.i",
+"label": "sprintf(\"%d problems mean size %.1f kb\", problems, mean.bases/1000)",
+"showSelected1": "bases.per.problem" 
+},
+"params": {
+ "parse": false,
+"check_overlap": false,
+"na.rm": false,
+"na.rm": false,
+"showSelected": "bases.per.problem",
+"help_showSelected": "bases.per.problem",
+"anchor": "start" 
+},
+"types": {
+ "y": "numeric",
+"x": "numeric",
+"label": "character",
+"showSelected1": "integer",
+"PANEL": "factor",
+"group": "character" 
+},
+"chunk_order": [],
+"nest_order": [
+ "showSelected1",
+"PANEL" 
+],
+"subset_order": [
+ "showSelected1",
+"PANEL" 
+],
+"chunks": 1,
+"total": 1 
+},
+"geom6_tallrect_coverage": {
+ "geom": "tallrect",
+"classed": "geom6_tallrect_coverage",
+"aes": {
+ "xmin": "chromStart/1000",
+"xmax": "chromEnd/1000",
+"linetype": "status",
+"showSelected1": "problem.name",
+"showSelected2": "peaks",
+"showSelected3": "status" 
+},
+"params": {
+ "na.rm": false,
+"na.rm": false,
+"fill": "transparent",
+"colour": "#000000",
+"showSelected": [ "problem.name", "peaks", "status" ],
+"showSelected2": "bases.per.problem",
+"help_showSelected": [ "problem.name", "peaks", "status" ] 
+},
+"types": {
+ "linetype": "numeric",
+"xmin": "numeric",
+"xmax": "numeric",
+"showSelected1": "factor",
+"showSelected2": "integer",
+"showSelected3": "character",
+"PANEL": "factor",
+"group": "character" 
+},
+"chunk_order": [
+ "peaks" 
+],
+"nest_order": [
+ "showSelected1",
+"showSelected3",
+"PANEL" 
+],
+"subset_order": [
+ "showSelected1",
+"showSelected3",
+"PANEL" 
+],
+"chunks": {
+ "0": 1,
+"1": 2,
+"2": 3,
+"3": 4,
+"4": 5 
+},
+"total": 5 
+},
+"geom7_segment_coverage": {
+ "geom": "segment",
+"classed": "geom7_segment_coverage",
+"aes": {
+ "x": "chromStart/1000",
+"y": "1",
+"xend": "chromEnd/1000",
+"yend": "1",
+"clickSelects": "problem.name",
+"showSelected1": "problem.name",
+"showSelected2": "peaks" 
+},
+"params": {
+ "lineend": "butt",
+"na.rm": false,
+"na.rm": false,
+"size":        7,
+"colour": "#00BFFF",
+"clickSelects": "problem.name",
+"showSelected": [ "problem.name", "peaks" ],
+"showSelected2": "bases.per.problem",
+"help_clickSelects": "problem.name",
+"help_showSelected": [ "problem.name", "peaks" ] 
+},
+"types": {
+ "y": "numeric",
+"yend": "numeric",
+"x": "numeric",
+"xend": "numeric",
+"clickSelects": "factor",
+"showSelected1": "factor",
+"showSelected2": "numeric",
+"PANEL": "factor",
+"group": "character" 
+},
+"chunk_order": [
+ "peaks" 
+],
+"nest_order": [
+ "showSelected1",
+"PANEL" 
+],
+"subset_order": [
+ "showSelected1",
+"PANEL" 
+],
+"chunks": {
+ "1": 1,
+"2": 2,
+"3": 3,
+"4": 4 
+},
+"total": 4 
+},
+"geom8_segment_coverage": {
+ "geom": "segment",
+"classed": "geom8_segment_coverage",
+"aes": {
+ "x": "chromStart/1000",
+"y": "1",
+"xend": "chromEnd/1000",
+"yend": "1",
+"clickSelects": "problem.name",
+"showSelected1": "problem.name",
+"showSelected2": "peaks" 
+},
+"params": {
+ "lineend": "butt",
+"na.rm": false,
+"na.rm": false,
+"size":        7,
+"colour": "#00BFFF",
+"clickSelects": "problem.name",
+"showSelected": [ "problem.name", "peaks" ],
+"showSelected2": "bases.per.problem",
+"help_clickSelects": "problem.name",
+"help_showSelected": [ "problem.name", "peaks" ] 
+},
+"types": {
+ "y": "numeric",
+"yend": "numeric",
+"x": "numeric",
+"xend": "numeric",
+"clickSelects": "factor",
+"showSelected1": "factor",
+"showSelected2": "numeric",
+"PANEL": "factor",
+"group": "character" 
+},
+"chunk_order": [
+ "peaks" 
+],
+"nest_order": [
+ "showSelected1",
+"PANEL" 
+],
+"subset_order": [
+ "showSelected1",
+"PANEL" 
+],
+"chunks": {
+ "1": 1,
+"2": 2,
+"3": 3,
+"4": 4 
+},
+"total": 4 
+},
+"geom9_tallrect_resError": {
+ "geom": "tallrect",
+"classed": "geom9_tallrect_resError",
+"aes": {
+ "xmin": "min.bases.per.problem",
+"xmax": "max.bases.per.problem",
+"clickSelects": "bases.per.problem" 
+},
+"params": {
+ "na.rm": false,
+"na.rm": false,
+"alpha":      0.5,
+"clickSelects": "bases.per.problem",
+"help_clickSelects": "bases.per.problem" 
+},
+"types": {
+ "xmin": "numeric",
+"xmax": "numeric",
+"clickSelects": "integer",
+"PANEL": "integer",
+"group": "character" 
+},
+"chunk_order": [],
+"nest_order": [],
+"subset_order": [],
+"chunks": 1,
+"total": 1 
+},
+"geom10_line_resError": {
+ "geom": "line",
+"classed": "geom10_line_resError",
+"aes": {
+ "x": "bases.per.problem",
+"y": "errors/regions * 100",
+"colour": "chunks",
+"size": "chunks",
+"showSelected1": "chunks" 
+},
+"params": {
+ "na.rm": false,
+"na.rm": false,
+"showSelected": "chunks",
+"help_showSelected": "chunks" 
+},
+"types": {
+ "colour": "rgb",
+"size": "numeric",
+"x": "numeric",
+"y": "numeric",
+"showSelected1": "character",
+"PANEL": "integer",
+"group": "character" 
+},
+"chunk_order": [],
+"nest_order": [
+ "showSelected1" 
+],
+"subset_order": [
+ "showSelected1" 
+],
+"chunks": 1,
+"total": 1 
+},
+"geom11_line_resError": {
+ "geom": "line",
+"classed": "geom11_line_resError",
+"aes": {
+ "x": "bases.per.problem",
+"y": "errors/regions * 100",
+"colour": "chunks",
+"size": "chunks",
+"showSelected1": "chunks" 
+},
+"params": {
+ "na.rm": false,
+"na.rm": false,
+"showSelected": "chunks",
+"help_showSelected": "chunks" 
+},
+"types": {
+ "colour": "rgb",
+"size": "numeric",
+"x": "numeric",
+"y": "numeric",
+"showSelected1": "character",
+"PANEL": "integer",
+"group": "character" 
+},
+"chunk_order": [],
+"nest_order": [
+ "showSelected1" 
+],
+"subset_order": [
+ "showSelected1" 
+],
+"chunks": 1,
+"total": 1 
+},
+"geom12_segment_modelSelection": {
+ "geom": "segment",
+"classed": "geom12_segment_modelSelection",
+"aes": {
+ "x": "min.log.lambda",
+"y": "peaks",
+"xend": "max.log.lambda",
+"yend": "peaks",
+"showSelected1": "problem.name" 
+},
+"params": {
+ "lineend": "butt",
+"na.rm": false,
+"na.rm": false,
+"size":        5,
+"showSelected": "problem.name",
+"showSelected2": "bases.per.problem",
+"help_showSelected": "problem.name" 
+},
+"types": {
+ "x": "numeric",
+"xend": "numeric",
+"y": "numeric",
+"yend": "numeric",
+"showSelected1": "factor",
+"PANEL": "factor",
+"group": "character" 
+},
+"chunk_order": [],
+"nest_order": [
+ "showSelected1",
+"PANEL" 
+],
+"subset_order": [
+ "showSelected1",
+"PANEL" 
+],
+"chunks": 1,
+"total": 1 
+},
+"geom13_text_modelSelection": {
+ "geom": "text",
+"classed": "geom13_text_modelSelection",
+"aes": {
+ "x": "min.log.lambda",
+"y": "peaks",
+"label": "sprintf(\"%.1f kb in problem %s\", (problemEnd - problemStart)/1000, problem.name)",
+"showSelected1": "problem.name" 
+},
+"params": {
+ "parse": false,
+"check_overlap": false,
+"na.rm": false,
+"na.rm": false,
+"showSelected": "problem.name",
+"showSelected2": "bases.per.problem",
+"help_showSelected": "problem.name" 
+},
+"types": {
+ "x": "numeric",
+"y": "numeric",
+"label": "character",
+"showSelected1": "factor",
+"PANEL": "factor",
+"group": "character" 
+},
+"chunk_order": [],
+"nest_order": [
+ "showSelected1",
+"PANEL" 
+],
+"subset_order": [
+ "showSelected1",
+"PANEL" 
+],
+"chunks": 1,
+"total": 1 
+},
+"geom14_segment_modelSelection": {
+ "geom": "segment",
+"classed": "geom14_segment_modelSelection",
+"aes": {
+ "x": "min.log.lambda",
+"y": "as.integer(errors)",
+"xend": "max.log.lambda",
+"yend": "as.integer(errors)",
+"showSelected1": "problem.name" 
+},
+"params": {
+ "lineend": "butt",
+"na.rm": false,
+"na.rm": false,
+"size":        5,
+"showSelected": "problem.name",
+"showSelected2": "bases.per.problem",
+"help_showSelected": "problem.name" 
+},
+"types": {
+ "x": "numeric",
+"xend": "numeric",
+"y": "numeric",
+"yend": "numeric",
+"showSelected1": "factor",
+"PANEL": "factor",
+"group": "character" 
+},
+"chunk_order": [],
+"nest_order": [
+ "showSelected1",
+"PANEL" 
+],
+"subset_order": [
+ "showSelected1",
+"PANEL" 
+],
+"chunks": 1,
+"total": 1 
+},
+"geom15_tallrect_modelSelection": {
+ "geom": "tallrect",
+"classed": "geom15_tallrect_modelSelection",
+"aes": {
+ "xmin": "min.log.lambda",
+"xmax": "max.log.lambda",
+"clickSelects": "peaks",
+"showSelected1": "problem.name" 
+},
+"params": {
+ "na.rm": false,
+"na.rm": false,
+"alpha":      0.5,
+"clickSelects": "peaks",
+"showSelected": "problem.name",
+"showSelected2": "bases.per.problem",
+"help_clickSelects": "peaks",
+"help_showSelected": "problem.name" 
+},
+"types": {
+ "xmin": "numeric",
+"xmax": "numeric",
+"clickSelects": "numeric",
+"showSelected1": "factor",
+"PANEL": "factor",
+"group": "character" 
+},
+"chunk_order": [],
+"nest_order": [
+ "showSelected1",
+"PANEL" 
+],
+"subset_order": [
+ "showSelected1",
+"PANEL" 
+],
+"chunks": 1,
+"total": 1 
+} 
+},
+"duration": {
+ "problem.name":     1000,
+"bases.per.problem":     1000 
+},
+"selectors": {
+ "annotation": {
+ "type": "multiple",
+"legend": true,
+"is.variable.value": false,
+"showSelected": true,
+"selected": [ "noPeaks", "peakStart", "peakEnd" ],
+"levels": [ "noPeaks", "peakStart", "peakEnd" ],
+"update": [
+ "geom1_tallrect_coverage" 
+] 
+},
+"status": {
+ "type": "multiple",
+"legend": true,
+"is.variable.value": false,
+"showSelected": true,
+"selected": [ "correct", "false positive", "false negative" ],
+"levels": [ "correct", "false positive", "false negative" ],
+"update": [
+ "geom6_tallrect_coverage" 
+] 
+},
+"chunks": {
+ "type": "multiple",
+"legend": true,
+"is.variable.value": false,
+"showSelected": true,
+"selected": [ "this", "all" ],
+"levels": [ "this", "all" ],
+"update": [
+ "geom10_line_resError",
+"geom11_line_resError" 
+] 
+},
+"problem.name": {
+ "is.variable.value": false,
+"type": "single",
+"clickSelects": true,
+"showSelected": true,
+"selected": "chr11:118175144-118176570",
+"levels": [ "chr11:118175144-118176570", "chr11:118210640-118211926", "chr11:118211927-118213402", "chr11:118214880-118216310", "chr11:118216311-118217053", "chr11:118227122-118228294", "chr11:118230212-118231217", "chr11:118174866-118177024", "chr11:118210926-118211667", "chr11:118211668-118213341", "chr11:118214905-118217190", "chr11:118224813-118226715", "chr11:118230179-118231781", "chr11:118175139-118176578", "chr11:118209536-118211789", "chr11:118211790-118213354", "chr11:118214509-118217408", "chr11:118221068-118225263", "chr11:118229400-118231571", "chr11:118174953-118176654", "chr11:118209252-118213860", "chr11:118214496-118218828", "chr11:118224849-118228003", "chr11:118228456-118231646", "chr11:118174946-118177139", "chr11:118208777-118213897", "chr11:118213898-118218859", "chr11:118218860-118229258", "chr11:118229259-118233705", "chr11:118171577-118178639", "chr11:118208371-118214262", "chr11:118214263-118219522", "chr11:118219523-118225461", "chr11:118226161-118233711", "chr11:118170572-118179444", "chr11:118207606-118220428", "chr11:118224254-118234051", "chr11:118169778-118184378", "chr11:118208100-118222359", "chr11:118222360-118239987", "chr11:118166081-118182712", "chr11:118200904-118225604", "chr11:118225605-118243804", "chr11:118170310-118195238", "chr11:118195500-118224233", "chr11:118224234-118249203", "chr11:118150742-118195371", "chr11:118195372-118224236", "chr11:118224237-118256837", "chr11:118139927-118194115", "chr11:118194116-118250799", "chr11:118125367-118194817", "chr11:118194818-118266077", "chr11:118172963-118174591", "chr11:118176571-118177178", "chr11:118177179-118178055", "chr11:118178056-118178679", "chr11:118178680-118180256", "chr11:118180412-118181804", "chr11:118181805-118182930", "chr11:118182931-118183687", "chr11:118183688-118184421", "chr11:118184422-118184700", "chr11:118184701-118185739", "chr11:118185740-118186797", "chr11:118186798-118187477", "chr11:118187478-118188401", "chr11:118188402-118190759", "chr11:118190760-118191990", "chr11:118191991-118192950", "chr11:118192951-118193582", "chr11:118193583-118195135", "chr11:118195386-118196748", "chr11:118196749-118197629", "chr11:118197630-118199059", "chr11:118199060-118200161", "chr11:118200162-118201432", "chr11:118201433-118202458", "chr11:118202692-118203892", "chr11:118203893-118204314", "chr11:118204409-118206012", "chr11:118206013-118206943", "chr11:118206944-118208392", "chr11:118208393-118209422", "chr11:118209423-118210639", "chr11:118213403-118214361", "chr11:118217054-118218159", "chr11:118218160-118219136", "chr11:118219344-118220681", "chr11:118220682-118221565", "chr11:118221566-118222673", "chr11:118222674-118223468", "chr11:118223469-118224627", "chr11:118224628-118225252", "chr11:118225253-118226275", "chr11:118226276-118227121", "chr11:118228295-118229617", "chr11:118229618-118230211", "chr11:118231218-118231779", "chr11:118231780-118233718", "chr11:118233719-118234653", "chr11:118172617-118174865", "chr11:118177025-118178581", "chr11:118178582-118180380", "chr11:118180381-118182034", "chr11:118182035-118183425", "chr11:118183426-118185207", "chr11:118185393-118186834", "chr11:118186835-118188437", "chr11:118188438-118191972", "chr11:118191973-118193671", "chr11:118193672-118195893", "chr11:118195894-118197229", "chr11:118197230-118198986", "chr11:118198987-118199961", "chr11:118199962-118201879", "chr11:118202212-118203695", "chr11:118203696-118204821", "chr11:118204822-118206054", "chr11:118206055-118206943", "chr11:118206944-118208390", "chr11:118208391-118209537", "chr11:118209538-118210524", "chr11:118210525-118210925", "chr11:118213342-118214904", "chr11:118217257-118218373", "chr11:118218374-118219848", "chr11:118219849-118221564", "chr11:118221565-118223070", "chr11:118223071-118224812", "chr11:118226716-118228591", "chr11:118228592-118229705", "chr11:118229706-118230178", "chr11:118231782-118232529", "chr11:118232530-118233179", "chr11:118233180-118234772", "chr11:118172062-118175138", "chr11:118176579-118178170", "chr11:118178171-118180360", "chr11:118180361-118181820", "chr11:118181821-118183691", "chr11:118183692-118184718", "chr11:118184719-118186458", "chr11:118186459-118188914", "chr11:118188915-118190753", "chr11:118190754-118191964", "chr11:118191965-118193492", "chr11:118193493-118195694", "chr11:118195695-118197557", "chr11:118197558-118200387", "chr11:118200388-118202617", "chr11:118202618-118204895", "chr11:118204896-118205988", "chr11:118205989-118207487", "chr11:118207488-118209535", "chr11:118213355-118214508", "chr11:118217409-118218173", "chr11:118218174-118219584", "chr11:118219585-118221067", "chr11:118225264-118228246", "chr11:118228247-118229399", "chr11:118231572-118233230", "chr11:118233231-118235084", "chr11:118169294-118172593", "chr11:118172594-118174952", "chr11:118176655-118179273", "chr11:118179274-118182038", "chr11:118182039-118185519", "chr11:118185520-118189896", "chr11:118190281-118194391", "chr11:118194392-118197114", "chr11:118197194-118201802", "chr11:118202864-118207472", "chr11:118218829-118222360", "chr11:118222361-118224848", "chr11:118231647-118235159", "chr11:118170511-118174945", "chr11:118177140-118179564", "chr11:118179565-118184430", "chr11:118184431-118190097", "chr11:118190098-118195843", "chr11:118196423-118202427", "chr11:118202428-118208431", "chr11:118233706-118239904", "chr11:118161082-118170298", "chr11:118178640-118184271", "chr11:118184272-118189408", "chr11:118189409-118195097", "chr11:118195098-118202120", "chr11:118202121-118208370", "chr11:118233712-118241262", "chr11:118157970-118170571", "chr11:118179445-118184245", "chr11:118184246-118190326", "chr11:118190327-118195415", "chr11:118195416-118202706", "chr11:118202707-118207605", "chr11:118234052-118243502", "chr11:118153536-118169777", "chr11:118184379-118196409", "chr11:118196410-118208099", "chr11:118142322-118166080", "chr11:118182713-118200648", "chr11:118139220-118170309" ],
+"update": [
+ "geom3_segment_coverage",
+"geom4_segment_coverage",
+"geom6_tallrect_coverage",
+"geom7_segment_coverage",
+"geom8_segment_coverage",
+"geom12_segment_modelSelection",
+"geom13_text_modelSelection",
+"geom14_segment_modelSelection",
+"geom15_tallrect_modelSelection" 
+],
+"duration":     1000 
+},
+"bases.per.problem": {
+ "is.variable.value": false,
+"type": "single",
+"showSelected": true,
+"clickSelects": true,
+"selected": "1629",
+"levels": [ "1629", "2304", "3258", "4608", "6516", "9216", "13033", "18432", "26066", "36864", "52133", "73728", "104267" ],
+"update": [
+ "geom3_segment_coverage",
+"geom4_segment_coverage",
+"geom5_text_coverage",
+"geom9_tallrect_resError" 
+],
+"duration":     1000 
+},
+"peaks": {
+ "is.variable.value": false,
+"type": "single",
+"showSelected": true,
+"chunks": "peaks",
+"clickSelects": true,
+"selected": "0",
+"levels": [ "0", "1", "2", "3", "4" ],
+"update": [
+ "geom6_tallrect_coverage",
+"geom7_segment_coverage",
+"geom8_segment_coverage",
+"geom15_tallrect_modelSelection" 
+] 
+} 
+},
+"plots": {
+ "coverage": {
+ "panel_margin_lines":        0,
+"legend": {
+ "error type": {
+ "guide": "legend",
+"geoms": "polygon",
+"title": "error type",
+"class": "status",
+"selector": "status",
+"is_discrete": true,
+"legend_type": "linetype",
+"text_size": "9.6pt",
+"title_size": "12pt",
+"entries": [
+ {
+ "polygonlinetype":        0,
+"polygoncolour": "#000000",
+"polygonsize":      0.5,
+"polygonalpha":      0.5,
+"label": "correct" 
+},
+{
+ "polygonlinetype":        3,
+"polygoncolour": "#000000",
+"polygonsize":      0.5,
+"polygonalpha":      0.5,
+"label": "false negative" 
+},
+{
+ "polygonlinetype":        1,
+"polygoncolour": "#000000",
+"polygonsize":      0.5,
+"polygonalpha":      0.5,
+"label": "false positive" 
+} 
+] 
+},
+"annotation": {
+ "guide": "legend",
+"geoms": "polygon",
+"title": "annotation",
+"class": "annotation",
+"selector": "annotation",
+"is_discrete": true,
+"legend_type": "fill",
+"text_size": "9.6pt",
+"title_size": "12pt",
+"entries": [
+ {
+ "polygonfill": "#F6F4BF",
+"polygoncolour": "#BEBEBE",
+"polygonsize":      0.5,
+"polygonlinetype":        1,
+"polygonalpha":      0.5,
+"label": "noPeaks" 
+},
+{
+ "polygonfill": "#FF4C4C",
+"polygoncolour": "#BEBEBE",
+"polygonsize":      0.5,
+"polygonlinetype":        1,
+"polygonalpha":      0.5,
+"label": "peakEnd" 
+},
+{
+ "polygonfill": "#FFAFAF",
+"polygoncolour": "#BEBEBE",
+"polygonsize":      0.5,
+"polygonlinetype":        1,
+"polygonalpha":      0.5,
+"label": "peakStart" 
+} 
+] 
+} 
+},
+"strips": {
+ "right": [
+ "McGill0091",
+"McGill0095",
+"McGill0107",
+"McGill0322",
+"problems" 
+],
+"top": [
+ "",
+"",
+"",
+"",
+"" 
+],
+"n": {
+ "top":        1,
+"right":        1 
+} 
+},
+"layout": {
+ "PANEL": [ "1", "2", "3", "4", "5" ],
+"ROW": [ 1, 2, 3, 4, 5 ],
+"COL": [ 1, 1, 1, 1, 1 ],
+"sample.id": [ "McGill0091", "McGill0095", "McGill0107", "McGill0322", "problems" ],
+"SCALE_X": [ 1, 1, 1, 1, 1 ],
+"SCALE_Y": [ 1, 2, 3, 4, 5 ],
+"AXIS_Y": [ true, true, true, true, true ],
+"AXIS_X": [ false, false, false, false, true ],
+"coord_fixed": [ false, false, false, false, false ],
+"width_proportion": [        1,        1,        1,        1,        1 ],
+"height_proportion": [      0.2,      0.2,      0.2,      0.2,      0.2 ] 
+},
+"panel_background": {
+ "fill": "#FFFFFF",
+"colour": "transparent",
+"size":      0.5,
+"linetype":        1 
+},
+"panel_border": {
+ "fill": "transparent",
+"colour": "#7F7F7F",
+"size":      0.5,
+"linetype":        1 
+},
+"grid_major": {
+ "colour": "#E5E5E5",
+"size":      0.2,
+"linetype":        1,
+"lineend": "butt",
+"loc": {
+ "x": [
+ [
+   118180,
+  118200,
+  118220,
+  118240 
+],
+[
+   118180,
+  118200,
+  118220,
+  118240 
+],
+[
+   118180,
+  118200,
+  118220,
+  118240 
+],
+[
+   118180,
+  118200,
+  118220,
+  118240 
+],
+[
+   118180,
+  118200,
+  118220,
+  118240 
+] 
+],
+"y": [
+ [
+       91 
+],
+[
+      149 
+],
+[
+       80 
+],
+[
+       51 
+],
+[
+       57 
+] 
+] 
+} 
+},
+"grid_minor": {
+ "colour": "#FAFAFA",
+"size":      0.5,
+"linetype":        1,
+"lineend": "butt",
+"loc": {
+ "x": [
+ [
+   118170,
+  118180,
+  118190,
+  118200,
+  118210,
+  118220,
+  118230,
+  118240 
+],
+[
+   118170,
+  118180,
+  118190,
+  118200,
+  118210,
+  118220,
+  118230,
+  118240 
+],
+[
+   118170,
+  118180,
+  118190,
+  118200,
+  118210,
+  118220,
+  118230,
+  118240 
+],
+[
+   118170,
+  118180,
+  118190,
+  118200,
+  118210,
+  118220,
+  118230,
+  118240 
+],
+[
+   118170,
+  118180,
+  118190,
+  118200,
+  118210,
+  118220,
+  118230,
+  118240 
+] 
+],
+"y": [
+ [],
+[],
+[],
+[],
+[] 
+] 
+} 
+},
+"axis1": {
+ "x": [
+   118180,
+  118200,
+  118220,
+  118240 
+],
+"xlab": [
+ "118180",
+"118200",
+"118220",
+"118240" 
+],
+"xrange": [ 118163.8, 118242.4 ],
+"xline": false,
+"xticks": true,
+"y": [
+       91 
+],
+"ylab": [
+ "91" 
+],
+"yrange": [    -4.35,    91.35 ],
+"yline": false,
+"yticks": true 
+},
+"axis2": {
+ "x": [
+   118180,
+  118200,
+  118220,
+  118240 
+],
+"xlab": [
+ "118180",
+"118200",
+"118220",
+"118240" 
+],
+"xrange": [ 118163.8, 118242.4 ],
+"xline": false,
+"xticks": true,
+"y": [
+      149 
+],
+"ylab": [
+ "149" 
+],
+"yrange": [     -7.1,    149.1 ],
+"yline": false,
+"yticks": true 
+},
+"axis3": {
+ "x": [
+   118180,
+  118200,
+  118220,
+  118240 
+],
+"xlab": [
+ "118180",
+"118200",
+"118220",
+"118240" 
+],
+"xrange": [ 118163.8, 118242.4 ],
+"xline": false,
+"xticks": true,
+"y": [
+       80 
+],
+"ylab": [
+ "80" 
+],
+"yrange": [    -3.85,    80.85 ],
+"yline": false,
+"yticks": true 
+},
+"axis4": {
+ "x": [
+   118180,
+  118200,
+  118220,
+  118240 
+],
+"xlab": [
+ "118180",
+"118200",
+"118220",
+"118240" 
+],
+"xrange": [ 118163.8, 118242.4 ],
+"xline": false,
+"xticks": true,
+"y": [
+       51 
+],
+"ylab": [
+ "51" 
+],
+"yrange": [    -2.45,    51.45 ],
+"yline": false,
+"yticks": true 
+},
+"axis5": {
+ "x": [
+   118180,
+  118200,
+  118220,
+  118240 
+],
+"xlab": [
+ "118180",
+"118200",
+"118220",
+"118240" 
+],
+"xrange": [ 118163.8, 118242.4 ],
+"xline": false,
+"xticks": true,
+"y": [
+       57 
+],
+"ylab": [
+ "57" 
+],
+"yrange": [     -1.7,     57.7 ],
+"yline": false,
+"yticks": true 
+},
+"xtitle": "position on chr11 (kilo bases = kb)",
+"strip_text_xsize": "12pt",
+"xsize": "12pt",
+"xangle":        0,
+"xanchor": "middle",
+"ytitle": "aligned read coverage",
+"strip_text_ysize": "12pt",
+"ysize": "12pt",
+"yangle":        0,
+"yanchor": "end",
+"xlabs": [
+ "118180",
+"118200",
+"118220",
+"118240" 
+],
+"ylabs": [
+ "91",
+"149",
+"80",
+"51",
+"57" 
+],
+"title_size": "14.4pt",
+"options": {
+ "width":     1500,
+"height":      500 
+},
+"geoms": [
+ "geom1_tallrect_coverage",
+"geom2_line_coverage",
+"geom3_segment_coverage",
+"geom4_segment_coverage",
+"geom5_text_coverage",
+"geom6_tallrect_coverage",
+"geom7_segment_coverage",
+"geom8_segment_coverage" 
+] 
+},
+"resError": {
+ "panel_margin_lines":     0.25,
+"legend": {
+ "chunks": {
+ "guide": "legend",
+"geoms": [ "path", "path" ],
+"title": "chunks",
+"class": "chunks",
+"selector": "chunks",
+"is_discrete": true,
+"legend_type": [ "colour", "size" ],
+"text_size": "8.8pt",
+"title_size": "11pt",
+"entries": [
+ {
+ "pathcolour": "#F8766D",
+"pathsize":        2,
+"pathlinetype":        1,
+"label": "all" 
+},
+{
+ "pathcolour": "#00BFC4",
+"pathsize":        6,
+"pathlinetype":        1,
+"label": "this" 
+} 
+] 
+} 
+},
+"strips": {
+ "top": [
+ "" 
+],
+"right": [
+ "" 
+],
+"n": {
+ "top":        0,
+"right":        0 
+} 
+},
+"layout": {
+ "PANEL": [ 1 ],
+"ROW": [ 1 ],
+"COL": [ 1 ],
+"SCALE_X": [ 1 ],
+"SCALE_Y": [ 1 ],
+"AXIS_X": [ true ],
+"AXIS_Y": [ true ],
+"coord_fixed": [ false ],
+"width_proportion": [        1 ],
+"height_proportion": [        1 ] 
+},
+"panel_background": {
+ "fill": "#EBEBEB",
+"colour": "transparent",
+"size":      0.5,
+"linetype":        1 
+},
+"panel_border": [],
+"grid_major": {
+ "colour": "#FFFFFF",
+"size":      0.5,
+"linetype":        1,
+"lineend": "butt",
+"loc": {
+ "x": [
+ [
+ 3.477121,
+       4,
+4.477121,
+       5 
+] 
+],
+"y": [
+ [
+        0,
+      10,
+      20,
+      30 
+] 
+] 
+} 
+},
+"grid_minor": {
+ "colour": "#FFFFFF",
+"size":     0.25,
+"linetype":        1,
+"lineend": "butt",
+"loc": {
+ "x": [
+ [
+ 3.215682,
+3.477121,
+3.738561,
+       4,
+4.238561,
+4.477121,
+4.738561,
+       5 
+] 
+],
+"y": [
+ [
+        0,
+       5,
+      10,
+      15,
+      20,
+      25,
+      30 
+] 
+] 
+} 
+},
+"axis1": {
+ "x": [
+ 3.477121,
+       4,
+4.477121,
+       5 
+],
+"xlab": [
+ "3e+03",
+"1e+04",
+"3e+04",
+"1e+05" 
+],
+"xrange": [ 3.031687, 5.198381 ],
+"xline": true,
+"xticks": true,
+"y": [
+        0,
+      10,
+      20,
+      30 
+],
+"ylab": [
+ "0",
+"10",
+"20",
+"30" 
+],
+"yrange": [ -1.666667,       35 ],
+"yline": true,
+"yticks": true 
+},
+"xtitle": "bases.per.problem",
+"strip_text_xsize": "11pt",
+"xsize": "11pt",
+"xangle":        0,
+"xanchor": "middle",
+"ytitle": "minimum percent incorrect regions",
+"strip_text_ysize": "11pt",
+"ysize": "11pt",
+"yangle":        0,
+"yanchor": "end",
+"xlabs": [
+ "3e+03",
+"1e+04",
+"3e+04",
+"1e+05" 
+],
+"ylabs": [
+ "0",
+"10",
+"20",
+"30" 
+],
+"title": "select problem size",
+"title_size": "13.2pt",
+"options": {
+ "width":      400,
+"height":      400 
+},
+"geoms": [
+ "geom9_tallrect_resError",
+"geom10_line_resError",
+"geom11_line_resError" 
+] 
+},
+"modelSelection": {
+ "panel_margin_lines":     0.25,
+"legend": {},
+"strips": {
+ "right": [
+ "errors",
+"peaks" 
+],
+"top": [
+ "",
+"" 
+],
+"n": {
+ "top":        1,
+"right":        1 
+} 
+},
+"layout": {
+ "PANEL": [ "1", "2" ],
+"ROW": [ 1, 2 ],
+"COL": [ 1, 1 ],
+"what": [ "errors", "peaks" ],
+"SCALE_X": [ 1, 1 ],
+"SCALE_Y": [ 1, 2 ],
+"AXIS_Y": [ true, true ],
+"AXIS_X": [ false, true ],
+"coord_fixed": [ false, false ],
+"width_proportion": [        1,        1 ],
+"height_proportion": [      0.5,      0.5 ] 
+},
+"panel_background": {
+ "fill": "#EBEBEB",
+"colour": "transparent",
+"size":      0.5,
+"linetype":        1 
+},
+"panel_border": [],
+"grid_major": {
+ "colour": "#FFFFFF",
+"size":      0.5,
+"linetype":        1,
+"lineend": "butt",
+"loc": {
+ "x": [
+ [
+        0,
+       5,
+      10 
+],
+[
+        0,
+       5,
+      10 
+] 
+],
+"y": [
+ [
+        0,
+       5,
+      10,
+      15,
+      20 
+],
+[
+        0,
+       1,
+       2,
+       3,
+       4 
+] 
+] 
+} 
+},
+"grid_minor": {
+ "colour": "#FFFFFF",
+"size":     0.25,
+"linetype":        1,
+"lineend": "butt",
+"loc": {
+ "x": [
+ [
+     -2.5,
+       0,
+     2.5,
+       5,
+     7.5,
+      10,
+    12.5 
+],
+[
+     -2.5,
+       0,
+     2.5,
+       5,
+     7.5,
+      10,
+    12.5 
+] 
+],
+"y": [
+ [
+        0,
+     2.5,
+       5,
+     7.5,
+      10,
+    12.5,
+      15,
+    17.5,
+      20 
+],
+[
+        0,
+     0.5,
+       1,
+     1.5,
+       2,
+     2.5,
+       3,
+     3.5,
+       4,
+     4.5 
+] 
+] 
+} 
+},
+"axis1": {
+ "x": [
+        0,
+       5,
+      10 
+],
+"xlab": [
+ "0",
+"5",
+"10" 
+],
+"xrange": [ -2.663328, 13.45959 ],
+"xline": true,
+"xticks": true,
+"y": [
+        0,
+       5,
+      10,
+      15,
+      20 
+],
+"ylab": [
+ "0",
+"5",
+"10",
+"15",
+"20" 
+],
+"yrange": [       -1,       21 ],
+"yline": true,
+"yticks": true 
+},
+"axis2": {
+ "x": [
+        0,
+       5,
+      10 
+],
+"xlab": [
+ "0",
+"5",
+"10" 
+],
+"xrange": [ -2.663328, 13.45959 ],
+"xline": true,
+"xticks": true,
+"y": [
+        0,
+       1,
+       2,
+       3,
+       4 
+],
+"ylab": [
+ "0",
+"1",
+"2",
+"3",
+"4" 
+],
+"yrange": [   -0.225,    4.725 ],
+"yline": true,
+"yticks": true 
+},
+"xtitle": "min.log.lambda",
+"strip_text_xsize": "11pt",
+"xsize": "11pt",
+"xangle":        0,
+"xanchor": "middle",
+"ytitle": "",
+"strip_text_ysize": "11pt",
+"ysize": "11pt",
+"yangle":        0,
+"yanchor": "end",
+"xlabs": [
+ "0",
+"5",
+"10" 
+],
+"ylabs": [
+ "0",
+"5",
+"10",
+"15",
+"20",
+"1",
+"2",
+"3",
+"4" 
+],
+"title": "select number of samples with 1 peak",
+"title_size": "13.2pt",
+"options": {
+ "width":      400,
+"height":      400 
+},
+"geoms": [
+ "geom12_segment_modelSelection",
+"geom13_text_modelSelection",
+"geom14_segment_modelSelection",
+"geom15_tallrect_modelSelection" 
+] 
+} 
+},
+"title": "PeakSegJoint Interactive Visualization" 
+}
