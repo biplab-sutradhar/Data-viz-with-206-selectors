@@ -122,7 +122,7 @@ viz <- list(
       inherit.aes = FALSE
     ) +
     geom_segment(
-      aes(x = chromStart / 1e3, xend = chromEnd / 1e3, y = 1, yend = 1),
+      aes(x = chromStart / 1e3, xend = chromEnd / 1e3, y = 0.05, yend = 0.05),
       data = subset(sample.peaks, sample.id != "problems"),
       size = 7, color = "deepskyblue",
       clickSelects = "problem.name",
