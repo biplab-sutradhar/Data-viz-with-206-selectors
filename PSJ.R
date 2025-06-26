@@ -122,7 +122,7 @@ viz <- list(
       inherit.aes = FALSE
     ) +
     geom_segment(
-      aes(x = chromStart / 1e3, xend = chromEnd / 1e3, y = 0.05, yend = 0.05),
+      aes(x = chromStart / 1e3, xend = chromEnd / 1e3, y = 1, yend = 1),
       data = subset(sample.peaks, sample.id != "problems"),
       size = 7, color = "deepskyblue",
       clickSelects = "problem.name",
@@ -177,30 +177,30 @@ viz <- list(
       aes(xmin = min.log.lambda, xmax = max.log.lambda),
       data = all.modelSel, alpha = 0.5,
       clickSelects = "peaks",
-      showSelected = "problem.name"
+      showSelected = c("problem.name", "bases.per.problem")
     ) +
     geom_segment(
       aes(min.log.lambda, peaks, xend = max.log.lambda, yend = peaks),
       data = data.frame(all.modelSel, what = "peaks"),
       size = 5,
-      showSelected = "problem.name"
+      showSelected = c("problem.name", "bases.per.problem")
     ) +
     geom_text(
       aes(min.log.lambda, peaks,
           label = sprintf("%.1f kb in problem %s", (problemEnd - problemStart) / 1e3, problem.name)),
       data = data.frame(modelSel.lbls, what = "peaks"),
       hjust=0,
-      showSelected = "problem.name"
+      showSelected = c("problem.name", "bases.per.problem")
     ) +
     geom_segment(
       aes(min.log.lambda, as.integer(errors), xend = max.log.lambda, yend = as.integer(errors)),
       data = data.frame(modelSel.errs, what = "errors"),
       size = 5,
-      showSelected = "problem.name"
+      showSelected = c("problem.name", "bases.per.problem")
     ),
     
   first = PSJ$first,
   selector.types = list(problem.name = "single", bases.per.problem = "single") 
 )
 
-animint2dir(viz, out.dir = "PSJ_interactive_corrected_final")
+animint2dir(viz, out.dir = "PSJ_interactive")
