@@ -118,17 +118,15 @@ viz <- list(
     geom_tallrect(
       aes(xmin = chromStart / 1e3, xmax = chromEnd / 1e3, linetype = status),
       data = all.regions, fill = NA, color = "black",
-      showSelected = c("problem.name", "peaks"),
-      showSelected2 = "bases.per.problem",
+      showSelected = c("problem.name", "peaks", "bases.per.problem"),
       inherit.aes = FALSE
     ) +
     geom_segment(
-      aes(x = chromStart / 1e3, xend = chromEnd / 1e3, y = 1, yend = 1),
+      aes(x = chromStart / 1e3, xend = chromEnd / 1e3, y = 0.05, yend = 0.05),
       data = subset(sample.peaks, sample.id != "problems"),
       size = 7, color = "deepskyblue",
       clickSelects = "problem.name",
-      showSelected = c("problem.name", "peaks"),
-      showSelected2 = "bases.per.problem",
+      showSelected = c("problem.name", "peaks", "bases.per.problem"),
       inherit.aes = FALSE
     ) +
     geom_segment(
@@ -136,8 +134,7 @@ viz <- list(
       data = problem.peaks,
       size = 7, color = "deepskyblue",
       clickSelects = "problem.name",
-      showSelected = c("problem.name", "peaks"),
-      showSelected2 = "bases.per.problem",
+      showSelected = c("problem.name", "peaks", "bases.per.problem"),
       inherit.aes = FALSE
     ) +
     scale_y_continuous("aligned read coverage", breaks = function(l) floor(l[2])) +
@@ -180,31 +177,30 @@ viz <- list(
       aes(xmin = min.log.lambda, xmax = max.log.lambda),
       data = all.modelSel, alpha = 0.5,
       clickSelects = "peaks",
-      showSelected = "problem.name", showSelected2 = "bases.per.problem"
+      showSelected = "problem.name"
     ) +
     geom_segment(
       aes(min.log.lambda, peaks, xend = max.log.lambda, yend = peaks),
       data = data.frame(all.modelSel, what = "peaks"),
       size = 5,
-      showSelected = "problem.name", showSelected2 = "bases.per.problem"
+      showSelected = "problem.name"
     ) +
     geom_text(
       aes(min.log.lambda, peaks,
           label = sprintf("%.1f kb in problem %s", (problemEnd - problemStart) / 1e3, problem.name)),
       data = data.frame(modelSel.lbls, what = "peaks"),
       hjust=0,
-      showSelected = "problem.name", showSelected2 = "bases.per.problem"
+      showSelected = "problem.name"
     ) +
     geom_segment(
       aes(min.log.lambda, as.integer(errors), xend = max.log.lambda, yend = as.integer(errors)),
       data = data.frame(modelSel.errs, what = "errors"),
       size = 5,
-      showSelected = "problem.name", showSelected2 = "bases.per.problem"
+      showSelected = "problem.name"
     ),
     
   first = PSJ$first,
-  selector.types = list(problem.name = "single", bases.per.problem = "single"),
-  duration = list(problem.name = 1000, bases.per.problem = 1000)
+  selector.types = list(problem.name = "single", bases.per.problem = "single") 
 )
 
 animint2dir(viz, out.dir = "PSJ_interactive_corrected_final")
