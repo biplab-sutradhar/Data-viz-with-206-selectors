@@ -203,4 +203,4 @@ viz <- list(
   selector.types = list(problem.name = "single", bases.per.problem = "single") 
 )
 
-animint2dir(viz, out.dir = "PSJ_interactive")
+animint2dir(viz, out.dir = "PSJ")
