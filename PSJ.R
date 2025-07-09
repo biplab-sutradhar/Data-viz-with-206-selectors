@@ -72,12 +72,71 @@ dval2 <- (dval - 1) / 2 + 1
 res.error$min.bases.per.problem <- res.error$bases.per.problem / dval2
 res.error$max.bases.per.problem <- res.error$bases.per.problem * dval2
 
+# Set initial values for all selectors
 PSJ$first <- list(
   problem.name = prob.regions$problem.name[1],
-  bases.per.problem = prob.regions$bases.per.problem[1]
+  bases.per.problem = prob.regions$bases.per.problem[1],
+  peaks = unique(sample.peaks$peaks)[1]  # Add initial peaks value
 )
 
 ann.colors <- c(noPeaks = "#f6f4bf", peakStart = "#ffafaf", peakEnd = "#ff4c4c", peaks = "#a445ee")
+
+# ==== FILTERING LOGIC FOR PEAKS ====
+# Get labeled regions from samples (excluding "problems")
+sample.labels <- subset(PSJ$filled.regions, sample.id != "problems")
+
+# Function to check if peaks intersect with any labeled region
+filter_intersecting_peaks <- function(peaks_df, labels_df) {
+  if (nrow(peaks_df) == 0 || nrow(labels_df) == 0) {
+    return(peaks_df[FALSE, ])  # Return empty dataframe with same structure
+  }
+  
+  intersecting_indices <- c()
+  
+  for (i in 1:nrow(peaks_df)) {
+    peak_start <- peaks_df$chromStart[i]
+    peak_end <- peaks_df$chromEnd[i]
+    
+    # Check if this peak intersects with any labeled region
+    intersects <- any(
+      labels_df$chromStart < peak_end & 
+      labels_df$chromEnd > peak_start
+    )
+    
+    if (intersects) {
+      intersecting_indices <- c(intersecting_indices, i)
+    }
+  }
+  
+  return(peaks_df[intersecting_indices, ])
+}
+
+# Filter sample peaks to only those that intersect with labeled regions
+sample.peaks.filtered <- filter_intersecting_peaks(sample.peaks, sample.labels)
+
+# Filter problem peaks to only those that intersect with labeled regions
+problem.peaks.filtered <- filter_intersecting_peaks(problem.peaks, sample.labels)
+
+# Add intersection flag to original datasets
+sample.peaks$intersects_label <- FALSE
+problem.peaks$intersects_label <- FALSE
+
+# Mark intersecting peaks in original datasets
+if (nrow(sample.peaks.filtered) > 0) {
+  sample.peaks$intersects_label <- paste(sample.peaks$problem.name, sample.peaks$peaks, sample.peaks$bases.per.problem, sample.peaks$chromStart, sample.peaks$chromEnd) %in% 
+    paste(sample.peaks.filtered$problem.name, sample.peaks.filtered$peaks, sample.peaks.filtered$bases.per.problem, sample.peaks.filtered$chromStart, sample.peaks.filtered$chromEnd)
+}
+
+if (nrow(problem.peaks.filtered) > 0) {
+  problem.peaks$intersects_label <- paste(problem.peaks$problem.name, problem.peaks$peaks, problem.peaks$bases.per.problem, problem.peaks$chromStart, problem.peaks$chromEnd) %in% 
+    paste(problem.peaks.filtered$problem.name, problem.peaks.filtered$peaks, problem.peaks.filtered$bases.per.problem, problem.peaks.filtered$chromStart, problem.peaks.filtered$chromEnd)
+}
+
+# Update factor levels for filtered datasets
+sample.peaks.filtered$sample.id <- factor(sample.peaks.filtered$sample.id, levels = sample.levels)
+problem.peaks.filtered$sample.id <- factor(problem.peaks.filtered$sample.id, levels = sample.levels)
+sample.peaks$sample.id <- factor(sample.peaks$sample.id, levels = sample.levels)
+problem.peaks$sample.id <- factor(problem.peaks$sample.id, levels = sample.levels)
 
 viz <- list(
   title = "PeakSegJoint Interactive Visualization",
@@ -121,20 +180,40 @@ viz <- list(
       showSelected = c("problem.name", "peaks", "bases.per.problem"),
       inherit.aes = FALSE
     ) +
+    # Sample peaks - show intersecting ones always, ALL for selected problem
     geom_segment(
       aes(x = chromStart / 1e3, xend = chromEnd / 1e3, y = 0.05, yend = 0.05),
-      data = subset(sample.peaks, sample.id != "problems"),
+      data = subset(sample.peaks.filtered, sample.id != "problems"),
       size = 7, color = "deepskyblue",
       clickSelects = "problem.name",
-      showSelected = c("problem.name", "peaks", "bases.per.problem"),
+      showSelected = "bases.per.problem",
       inherit.aes = FALSE
     ) +
+    # Additional sample peaks for selected problem (non-intersecting ones)
     geom_segment(
-      aes(x = chromStart / 1e3, xend = chromEnd / 1e3, y = problem.i, yend = problem.i),
-      data = problem.peaks,
+      aes(x = chromStart / 1e3, xend = chromEnd / 1e3, y = 0.05, yend = 0.05),
+      data = subset(sample.peaks, sample.id != "problems" & !intersects_label),
       size = 7, color = "deepskyblue",
       clickSelects = "problem.name",
-      showSelected = c("problem.name", "peaks", "bases.per.problem"),
+      showSelected = c("problem.name", "bases.per.problem", "peaks"),
+      inherit.aes = FALSE
+    ) +
+    # Problem peaks - show intersecting ones always, ALL for selected problem
+    geom_segment(
+      aes(x = chromStart / 1e3, xend = chromEnd / 1e3, y = problem.i, yend = problem.i),
+      data = problem.peaks.filtered,
+      size = 7, color = "deepskyblue",
+      clickSelects = "problem.name",
+      showSelected = "bases.per.problem",
+      inherit.aes = FALSE
+    ) +
+    # Additional problem peaks for selected problem (non-intersecting ones)
+    geom_segment(
+      aes(x = chromStart / 1e3, xend = chromEnd / 1e3, y = problem.i, yend = problem.i),
+      data = subset(problem.peaks, !intersects_label),
+      size = 7, color = "deepskyblue",
+      clickSelects = "problem.name",
+      showSelected = c("problem.name", "bases.per.problem", "peaks"),
       inherit.aes = FALSE
     ) +
     scale_y_continuous("aligned read coverage", breaks = function(l) floor(l[2])) +
@@ -200,7 +279,7 @@ viz <- list(
     ),
     
   first = PSJ$first,
-  selector.types = list(problem.name = "single", bases.per.problem = "single") 
+  selector.types = list(problem.name = "single", bases.per.problem = "single", peaks = "single") 
 )
 
 animint2dir(viz, out.dir = "PSJ")
