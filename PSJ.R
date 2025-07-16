@@ -4,7 +4,9 @@ library(PeakSegJoint)
 library(data.table)
 library(grid)
 
+# Load the data
 load("PSJ.RData")
+
 
 required_objects <- c(
   "coverage", "regions.by.problem", "modelSelection.by.problem",
@@ -16,6 +18,7 @@ if (length(missing_objects) > 0) {
   stop("The following required data objects are missing from PSJ.RData: ", paste(missing_objects, collapse=", "))
 }
 
+# --- Data Preparation ---
 all.regions <- do.call(rbind, PSJ$regions.by.problem)
 all.modelSel <- do.call(rbind, PSJ$modelSelection.by.problem)
 sample.peaks <- do.call(rbind, PSJ$peaks.by.problem)
@@ -35,6 +38,7 @@ PSJ$problem.labels$sample.id <- "problems"
 problems.coverage <- data.frame(base = prob.regions$chromStart, count = NA, sample.id = "problems")
 combined.coverage <- rbind(PSJ$coverage[, c("base", "count", "sample.id")], problems.coverage)
 
+# Set factor levels for consistent ordering in plots
 combined.coverage$sample.id <- factor(combined.coverage$sample.id, levels = sample.levels)
 prob.regions$sample.id      <- factor(prob.regions$sample.id,      levels = sample.levels)
 sample.peaks$sample.id      <- factor(sample.peaks$sample.id,      levels = sample.levels)
@@ -76,19 +80,17 @@ res.error$max.bases.per.problem <- res.error$bases.per.problem * dval2
 PSJ$first <- list(
   problem.name = prob.regions$problem.name[1],
   bases.per.problem = prob.regions$bases.per.problem[1],
-  peaks = unique(sample.peaks$peaks)[1]  # Add initial peaks value
+  peaks = unique(sample.peaks$peaks)[1]
 )
 
 ann.colors <- c(noPeaks = "#f6f4bf", peakStart = "#ffafaf", peakEnd = "#ff4c4c", peaks = "#a445ee")
 
-# ==== FILTERING LOGIC FOR PEAKS ====
-# Get labeled regions from samples (excluding "problems")
+# --- Filtering Logic for Intersecting Peaks ---
 sample.labels <- subset(PSJ$filled.regions, sample.id != "problems")
 
-# Function to check if peaks intersect with any labeled region
 filter_intersecting_peaks <- function(peaks_df, labels_df) {
   if (nrow(peaks_df) == 0 || nrow(labels_df) == 0) {
-    return(peaks_df[FALSE, ])  # Return empty dataframe with same structure
+    return(peaks_df[FALSE, ])
   }
   
   intersecting_indices <- c()
@@ -97,7 +99,6 @@ filter_intersecting_peaks <- function(peaks_df, labels_df) {
     peak_start <- peaks_df$chromStart[i]
     peak_end <- peaks_df$chromEnd[i]
     
-    # Check if this peak intersects with any labeled region
     intersects <- any(
       labels_df$chromStart < peak_end & 
       labels_df$chromEnd > peak_start
@@ -111,37 +112,36 @@ filter_intersecting_peaks <- function(peaks_df, labels_df) {
   return(peaks_df[intersecting_indices, ])
 }
 
-# Filter sample peaks to only those that intersect with labeled regions
 sample.peaks.filtered <- filter_intersecting_peaks(sample.peaks, sample.labels)
-
-# Filter problem peaks to only those that intersect with labeled regions
 problem.peaks.filtered <- filter_intersecting_peaks(problem.peaks, sample.labels)
-
-# Add intersection flag to original datasets
-sample.peaks$intersects_label <- FALSE
-problem.peaks$intersects_label <- FALSE
-
-# Mark intersecting peaks in original datasets
-if (nrow(sample.peaks.filtered) > 0) {
-  sample.peaks$intersects_label <- paste(sample.peaks$problem.name, sample.peaks$peaks, sample.peaks$bases.per.problem, sample.peaks$chromStart, sample.peaks$chromEnd) %in% 
-    paste(sample.peaks.filtered$problem.name, sample.peaks.filtered$peaks, sample.peaks.filtered$bases.per.problem, sample.peaks.filtered$chromStart, sample.peaks.filtered$chromEnd)
-}
-
-if (nrow(problem.peaks.filtered) > 0) {
-  problem.peaks$intersects_label <- paste(problem.peaks$problem.name, problem.peaks$peaks, problem.peaks$bases.per.problem, problem.peaks$chromStart, problem.peaks$chromEnd) %in% 
-    paste(problem.peaks.filtered$problem.name, problem.peaks.filtered$peaks, problem.peaks.filtered$bases.per.problem, problem.peaks.filtered$chromStart, problem.peaks.filtered$chromEnd)
-}
 
 # Update factor levels for filtered datasets
 sample.peaks.filtered$sample.id <- factor(sample.peaks.filtered$sample.id, levels = sample.levels)
 problem.peaks.filtered$sample.id <- factor(problem.peaks.filtered$sample.id, levels = sample.levels)
-sample.peaks$sample.id <- factor(sample.peaks$sample.id, levels = sample.levels)
-problem.peaks$sample.id <- factor(problem.peaks$sample.id, levels = sample.levels)
 
+# --- Compute Optimal Peaks ---
+setDT(modelSel.errs)
+optimal.peaks <- modelSel.errs[, .SD[which.min(errors)], by = .(problem.name, bases.per.problem)]
+
+# Prepare optimal peaks datasets
+setDT(problem.peaks)
+setDT(sample.peaks)
+setkey(problem.peaks, problem.name, bases.per.problem, peaks)
+setkey(sample.peaks, problem.name, bases.per.problem, peaks)
+setkey(optimal.peaks, problem.name, bases.per.problem, peaks)
+problem.peaks.optimal <- problem.peaks[optimal.peaks, nomatch = 0]
+sample.peaks.optimal <- sample.peaks[optimal.peaks, nomatch = 0]
+
+# Ensure sample.id factor levels are preserved
+problem.peaks.optimal$sample.id <- factor(problem.peaks.optimal$sample.id, levels = sample.levels)
+sample.peaks.optimal$sample.id <- factor(sample.peaks.optimal$sample.id, levels = sample.levels)
+
+# --- Visualization Definition ---
 viz <- list(
   title = "PeakSegJoint Interactive Visualization",
   
   coverage = ggplot() +
+   ggtitle("select problem") +
     facet_grid(sample.id ~ ., scales = "free_y") +
     geom_tallrect(
       aes(xmin = chromStart / 1e3, xmax = chromEnd / 1e3, fill = annotation),
@@ -166,7 +166,7 @@ viz <- list(
       inherit.aes = FALSE
     ) +
     geom_text(
-      aes(chromStart / 1e3, problem.i -50,
+      aes(chromStart / 1e3, problem.i - 50,
           label = sprintf("%d problems mean size %.1f kb", problems, mean.bases / 1e3)),
       data = PSJ$problem.labels,
       hjust = 0,
@@ -180,43 +180,46 @@ viz <- list(
       showSelected = c("problem.name", "peaks", "bases.per.problem"),
       inherit.aes = FALSE
     ) +
-    # Sample peaks - show intersecting ones always, ALL for selected problem
+    # Problem peaks: Optimal peaks for all problems (clickable)
     geom_segment(
-      aes(x = chromStart / 1e3, xend = chromEnd / 1e3, y = 0.05, yend = 0.05),
-      data = subset(sample.peaks.filtered, sample.id != "problems"),
-      size = 7, color = "deepskyblue",
+      aes(x = chromStart / 1e3, xend = chromEnd / 1e3, y = problem.i, yend = problem.i),
+      data = problem.peaks.optimal,
+      size = 7, color = "deepskyblue", alpha = 1,
       clickSelects = "problem.name",
       showSelected = "bases.per.problem",
       inherit.aes = FALSE
     ) +
-    # Additional sample peaks for selected problem (non-intersecting ones)
+    # Problem peaks: Selected peaks for the selected problem (clickable)
     geom_segment(
-      aes(x = chromStart / 1e3, xend = chromEnd / 1e3, y = 0.05, yend = 0.05),
-      data = subset(sample.peaks, sample.id != "problems" & !intersects_label),
-      size = 7, color = "deepskyblue",
+      aes(x = chromStart / 1e3, xend = chromEnd / 1e3, y = problem.i, yend = problem.i),
+      data = problem.peaks,
+      size = 7, color = "deepskyblue", alpha = 1,
       clickSelects = "problem.name",
       showSelected = c("problem.name", "bases.per.problem", "peaks"),
       inherit.aes = FALSE
     ) +
-    # Problem peaks - show intersecting ones always, ALL for selected problem
+    # Sample peaks: Optimal peaks for all samples (clickable)
     geom_segment(
-      aes(x = chromStart / 1e3, xend = chromEnd / 1e3, y = problem.i, yend = problem.i),
-      data = problem.peaks.filtered,
-      size = 7, color = "deepskyblue",
+      aes(x = chromStart / 1e3, xend = chromEnd / 1e3, y = 0.05, yend = 0.05),
+      data = subset(sample.peaks.optimal, sample.id != "problems"),
+      size = 7, color = "deepskyblue", alpha = 1,
       clickSelects = "problem.name",
       showSelected = "bases.per.problem",
       inherit.aes = FALSE
     ) +
-    # Additional problem peaks for selected problem (non-intersecting ones)
+    # Sample peaks: Selected peaks for the selected problem (clickable)
     geom_segment(
-      aes(x = chromStart / 1e3, xend = chromEnd / 1e3, y = problem.i, yend = problem.i),
-      data = subset(problem.peaks, !intersects_label),
-      size = 7, color = "deepskyblue",
+      aes(x = chromStart / 1e3, xend = chromEnd / 1e3, y = 0.05, yend = 0.05),
+      data = subset(sample.peaks, sample.id != "problems"),
+      size = 7, color = "deepskyblue", alpha = 1,
       clickSelects = "problem.name",
       showSelected = c("problem.name", "bases.per.problem", "peaks"),
       inherit.aes = FALSE
     ) +
-    scale_y_continuous("aligned read coverage", breaks = function(l) floor(l[2])) +
+    scale_y_continuous("aligned read coverage",
+                              breaks=function(limits){
+                                floor(limits[2])
+                              })+
     scale_linetype_manual(
       "error type",
       limits = c("correct", "false negative", "false positive"),
@@ -227,16 +230,22 @@ viz <- list(
     coord_cartesian(xlim = c(118167.406, 118238.833)) +
     theme_bw() +
     theme_animint(width = 1500, height = length(sample.levels) * 120) +
-    theme(panel.margin = grid::unit(0, "cm")),
-
-   resError = ggplot() +
+    theme(
+      panel.margin = grid::unit(0, "cm"),
+      plot.background = element_rect(fill = "transparent", colour = NA), 
+      panel.background = element_rect(fill = "transparent", colour = NA),
+      panel.border = element_blank() ,
+       plot.title = element_text(margin = margin(b = 20))
+    ),
+  
+  resError = ggplot() +
     ggtitle("select problem size") +
     ylab("minimum percent incorrect regions") +
     geom_tallrect(
       aes(xmin=min.bases.per.problem, xmax=max.bases.per.problem),
       data=res.error, alpha=0.5, clickSelects="bases.per.problem"
     ) +
-    scale_x_log10() +
+    scale_x_log10("bases per problem") +
     geom_line(
       aes(bases.per.problem, errors/regions*100, color=chunks, size=chunks),
       data=data.frame(res.error, chunks="this")
@@ -244,13 +253,21 @@ viz <- list(
     geom_line(
       aes(bases.per.problem, errors/regions*100, color=chunks, size=chunks),
       data=data.frame(PSJ$error.total.all, chunks="all")
+    ) +
+    scale_color_manual(values = c(this="darkturquoise", all="red")) +
+    scale_size_manual(values = c(this=5, all=1)) +
+    theme(
+      plot.background = element_rect(fill = "transparent", colour = NA),
+      panel.background = element_rect(fill = "transparent", colour = NA),
+      panel.border = element_blank(),
+      plot.margin = unit(c(2, 1, 1, 1), "cm")
     ),
-
-  modelSelection = ggplot() +
+  
+ modelSelection = ggplot() +
     ggtitle("select number of samples with 1 peak") +
     xlab("model complexity penalty log(lambda)") +
     ylab("") +
-    facet_grid(what ~ ., scales = "free", 
+    facet_grid(what ~ ., scales = "free",
                labeller = as_labeller(c(peaks="Number of peaks", errors="Label errors"))) +
     geom_tallrect(
       aes(xmin = min.log.lambda, xmax = max.log.lambda),
@@ -260,26 +277,30 @@ viz <- list(
     ) +
     geom_segment(
       aes(min.log.lambda, peaks, xend = max.log.lambda, yend = peaks),
-      data = data.frame(all.modelSel, what = "peaks"),
+      data = data.frame(all.modelSel, what = factor("peaks", levels = c("peaks", "errors"))), 
       size = 5,
       showSelected = c("problem.name", "bases.per.problem")
     ) +
     geom_text(
       aes(min.log.lambda, peaks,
           label = sprintf("%.1f kb in problem %s", (problemEnd - problemStart) / 1e3, problem.name)),
-      data = data.frame(modelSel.lbls, what = "peaks"),
-      hjust=0,
+      data = data.frame(modelSel.lbls, what = factor("peaks", levels = c("peaks", "errors"))), 
+      hjust = 0.5,
       showSelected = c("problem.name", "bases.per.problem")
     ) +
     geom_segment(
       aes(min.log.lambda, as.integer(errors), xend = max.log.lambda, yend = as.integer(errors)),
-      data = data.frame(modelSel.errs, what = "errors"),
+      data = data.frame(modelSel.errs, what = factor("errors", levels = c("peaks", "errors"))), 
       size = 5,
       showSelected = c("problem.name", "bases.per.problem")
+    ) +
+    theme(
+      plot.background = element_rect(fill = "transparent", colour = NA),
+      panel.background = element_rect(fill = "transparent", colour = NA),
+      panel.border = element_blank()
     ),
-    
   first = PSJ$first,
-  selector.types = list(problem.name = "single", bases.per.problem = "single", peaks = "single") 
+  selector.types = list(problem.name = "single", bases.per.problem = "single", peaks = "single")
 )
 
 animint2dir(viz, out.dir = "PSJ")
