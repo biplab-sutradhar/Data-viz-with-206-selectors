@@ -4,6 +4,9 @@ library(PeakSegJoint)
 library(data.table)
 library(grid)
 
+# Assuming works_with_R is a custom function; commented out as it may not be available
+# works_with_R("3.2.2", ggplot2="2.1.0", PeakSegJoint="2016.3.2", "tdhock/animint@03735869af84629d269556442345b2ea506ab42a")
+
 load("PSJ.RData")
 
 res.error <- PSJ$error.total.chunk
